@@ -260,6 +260,35 @@ void VideoPlayer::addEventListener(const VideoPlayer::ccVideoPlayerCallback& cal
     _eventCallback = callback;
 }
 
+double VideoPlayer::getDuration() const
+{
+    double duration = -1;
+    
+    if (!_videoURL.empty())
+    {
+        duration = JniHelper::callStaticIntMethod(videoHelperClassName, "getDuration", _videoPlayerIndex);
+    }
+    
+    return duration;
+}
+
+double VideoPlayer::getCurrentPlaybackTime() const
+{
+    double currentPlaybackTime = 0.0f;
+    
+    if (!_videoURL.empty())
+    {
+        currentPlaybackTime = JniHelper::callStaticIntMethod(videoHelperClassName, "getCurrentPosition", _videoPlayerIndex);
+    }
+    
+    return currentPlaybackTime;
+}
+
+void VideoPlayer::releaseVideo()
+{
+    JniHelper::callStaticVoidMethod(videoHelperClassName, "releaseVideo", _videoPlayerIndex);
+}
+
 void VideoPlayer::onPlayEvent(int event)
 {
     if (event == QUIT_FULLSCREEN)

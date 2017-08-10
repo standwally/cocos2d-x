@@ -147,6 +147,15 @@ std::string Application::getVersion() {
     return "";
 }
 
+std::string Application::getBuildNumber()
+{
+    NSString* buildNumber = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    if (buildNumber) {
+        return [buildNumber UTF8String];
+    }
+    return "";
+}
+
 bool Application::openURL(const std::string &url)
 {
     NSString* msg = [NSString stringWithCString:url.c_str() encoding:NSUTF8StringEncoding];

@@ -189,6 +189,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCSAXParser.h"
 #include "platform/CCThread.h"
+#include "platform/CCNetworkConnectivity.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCApplication-ios.h"

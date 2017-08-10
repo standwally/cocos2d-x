@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
@@ -400,6 +400,7 @@ void Director::setOpenGLView(GLView *openGLView)
         }
         
         _defaultFBO = experimental::FrameBuffer::getOrCreateDefaultFBO(_openGLView);
+        _defaultFBO->setClearColor(cocos2d::Color4F(0.0, 0.0, 0.0, 0.0));
         _defaultFBO->retain();
     }
 }
