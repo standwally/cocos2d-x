@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -421,12 +421,17 @@ float Scale9Sprite::getInsetBottom() const
 
 void Scale9Sprite::setScale9Enabled(bool enabled)
 {
+    if (_renderMode == RenderMode::POLYGON) {
+        CCLOGWARN("Scale9Sprite::setScale9Enabled() can't be called when using POLYGON render modes");
+        return;
+    }
+
     RenderingType type = enabled ? RenderingType::SLICE : RenderingType::SIMPLE;
     setRenderingType(type);
 
-    // only enable strech when scale9 is enabled
-    // for backward compatibiliy, since Sprite streches the texture no matter the rendering type
-    setStrechEnabled(enabled);
+    // only enable stretch when scale9 is enabled
+    // for backward compatibility, since Sprite stretches the texture no matter the rendering type
+    setStretchEnabled(enabled);
 }
 
 bool Scale9Sprite::isScale9Enabled() const
@@ -493,6 +498,10 @@ void Scale9Sprite::copyTo(Scale9Sprite* copy) const
 
 void Scale9Sprite::setRenderingType(Scale9Sprite::RenderingType type)
 {
+    if (_renderMode == RenderMode::POLYGON) {
+        CCLOGWARN("Scale9Sprite::setRenderingType() can't be called when using POLYGON render modes");
+        return;
+    }
     if (_renderingType != type) {
         _renderingType = type;
         if (_renderingType == RenderingType::SIMPLE) {
@@ -594,7 +603,7 @@ void Scale9Sprite::setCapInsets(const cocos2d::Rect &insetsCopy)
                    y2 - y1);
 
     // Only update center rect while in slice mode.
-    if (_renderingType == RenderingType::SLICE)
+    if (_renderingType == RenderingType::SLICE && _renderMode != RenderMode::POLYGON)
     {
         setCenterRect(insets);
     }

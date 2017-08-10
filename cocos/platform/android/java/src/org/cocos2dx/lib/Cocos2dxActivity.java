@@ -34,16 +34,13 @@ import android.media.AudioManager;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager.OnActivityResultListener;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
@@ -289,6 +286,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+        Cocos2dxEngineDataManager.init(this, mGLSurfaceView);
     }
 
     //native method,call GLViewImpl::getGLContextAttrs() to get the OpenGL ES context attributions
@@ -320,6 +319,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         SDKBox.onResume();
         this.hideVirtualButton();
        	resumeIfHasFocus();
+
+        Cocos2dxEngineDataManager.resume();
     }
     
     @Override
@@ -346,6 +347,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         SDKBox.onPause();
         Cocos2dxHelper.onPause();
         mGLSurfaceView.onPause();
+        Cocos2dxEngineDataManager.pause();
     }
 
     @Override
@@ -358,6 +360,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        Cocos2dxEngineDataManager.destroy();
     }
 
     @Override

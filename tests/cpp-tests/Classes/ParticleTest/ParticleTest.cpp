@@ -195,7 +195,7 @@ void DemoBigFlower::onEnter()
     _emitter->setRadialAccel(-120);
     _emitter->setRadialAccelVar(0);
 
-    // tagential
+    // tangential
     _emitter->setTangentialAccel(30);
     _emitter->setTangentialAccelVar(0);
 
@@ -279,7 +279,7 @@ void DemoRotFlower::onEnter()
     _emitter->setRadialAccel(-120);
     _emitter->setRadialAccelVar(0);
 
-    // tagential
+    // tangential
     _emitter->setTangentialAccel(30);
     _emitter->setTangentialAccelVar(0);
 
@@ -533,7 +533,7 @@ void DemoModernArt::onEnter()
     _emitter->setRadialAccel(70);
     _emitter->setRadialAccelVar(10);
 
-    // tagential
+    // tangential
     _emitter->setTangentialAccel(80);
     _emitter->setTangentialAccelVar(0);
 
@@ -1048,6 +1048,7 @@ ParticleTests::ParticleTests()
     ADD_TEST_CASE(ParticleResetTotalParticles);
 
     ADD_TEST_CASE(ParticleIssue12310);
+    ADD_TEST_CASE(ParticleSpriteFrame);
 }
 
 ParticleDemo::~ParticleDemo(void)
@@ -1058,6 +1059,8 @@ ParticleDemo::~ParticleDemo(void)
 void ParticleDemo::onEnter(void)
 {
     TestCase::onEnter();
+
+    MenuItemFont::setFontSize(32);
 
 	_color = LayerColor::create( Color4B(127,127,127,255) );
 	this->addChild(_color);
@@ -1998,7 +2001,9 @@ void ParticleResetTotalParticles::onEnter()
                                     {
                                         p->setTotalParticles(p->getTotalParticles() + 10 );
                                     });
+    add->setFontSizeObj(20);
     add->setPosition(Vec2(0, 25));
+    
     auto remove = MenuItemFont::create("remove 10 particles",
                                        [p](Ref*)->void
                                        {
@@ -2007,6 +2012,7 @@ void ParticleResetTotalParticles::onEnter()
                                            p->setTotalParticles(count);
                                        });
     remove->setPosition(Vec2(0, -25));
+    remove->setFontSizeObj(20);
     
     auto menu = Menu::create(add, remove, nullptr);
     menu->setPosition(Vec2(VisibleRect::center()));
@@ -2049,4 +2055,34 @@ void ParticleIssue12310::onEnter()
 std::string ParticleIssue12310::subtitle() const
 {
     return "You should see two Particle Emitters using different texture.";
+}
+
+//------------------------------------------------------------------
+//
+// ParticleSpriteFrame
+//
+//------------------------------------------------------------------
+void ParticleSpriteFrame::onEnter()
+{
+    ParticleDemo::onEnter();
+
+    _emitter = ParticleSmoke::create();
+    _emitter->retain();
+    _background->addChild(_emitter, 10);
+
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Particles/SpriteFrame.plist");
+
+    _emitter->setDisplayFrame( SpriteFrameCache::getInstance()->getSpriteFrameByName("dot.png") );
+
+    setEmitterPosition();
+}
+
+std::string ParticleSpriteFrame::title() const
+{
+    return "Particle from SpriteFrame";
+}
+
+std::string ParticleSpriteFrame::subtitle() const
+{
+    return "Should not use entire texture atlas";
 }

@@ -245,6 +245,16 @@ generateMipmap : function (
 },
 
 /**
+ * @method getAlphaTexture
+ * @return {cc.Texture2D}
+ */
+getAlphaTexture : function (
+)
+{
+    return cc.Texture2D;
+},
+
+/**
  * @method getDescription
  * @return {String}
  */
@@ -2201,6 +2211,16 @@ create : function (
 },
 
 /**
+ * @method getAttachedNodeCount
+ * @return {int}
+ */
+getAttachedNodeCount : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method Node
  * @constructor
  */
@@ -2703,20 +2723,20 @@ pause : function (
 
 /**
  * @method pushProjectionMatrix
- * @param {unsigned int} arg0
+ * @param {unsigned long} arg0
  */
 pushProjectionMatrix : function (
-int 
+long 
 )
 {
 },
 
 /**
  * @method popProjectionMatrix
- * @param {unsigned int} arg0
+ * @param {unsigned long} arg0
  */
 popProjectionMatrix : function (
-int 
+long 
 )
 {
 },
@@ -2733,10 +2753,10 @@ eventdispatcher
 
 /**
  * @method loadProjectionIdentityMatrix
- * @param {unsigned int} arg0
+ * @param {unsigned long} arg0
  */
 loadProjectionIdentityMatrix : function (
-int 
+long 
 )
 {
 },
@@ -2986,11 +3006,11 @@ scheduler
 /**
  * @method multiplyProjectionMatrix
  * @param {mat4_object} arg0
- * @param {unsigned int} arg1
+ * @param {unsigned long} arg1
  */
 multiplyProjectionMatrix : function (
 mat4, 
-int 
+long 
 )
 {
 },
@@ -3268,21 +3288,21 @@ getVisibleSize : function (
 /**
  * @method loadProjectionMatrix
  * @param {mat4_object} arg0
- * @param {unsigned int} arg1
+ * @param {unsigned long} arg1
  */
 loadProjectionMatrix : function (
 mat4, 
-int 
+long 
 )
 {
 },
 
 /**
  * @method initProjectionMatrixStack
- * @param {unsigned int} arg0
+ * @param {unsigned long} arg0
  */
 initProjectionMatrixStack : function (
-int 
+long 
 )
 {
 },
@@ -3440,6 +3460,14 @@ int
  */
 performFunctionInCocosThread : function (
 func 
+)
+{
+},
+
+/**
+ * @method removeAllFunctionsToBePerformedInCocosThread
+ */
+removeAllFunctionsToBePerformedInCocosThread : function (
 )
 {
 },
@@ -4305,12 +4333,12 @@ getGLProgram : function (
 
 /**
  * @method setUniformTexture
-* @param {String|String|int|int} str
-* @param {unsigned int|cc.Texture2D|cc.Texture2D|unsigned int} int
+* @param {int|String} int
+* @param {cc.Texture2D|cc.Texture2D} texture2d
 */
 setUniformTexture : function(
-int,
-int 
+str,
+texture2d 
 )
 {
 },
@@ -7053,26 +7081,28 @@ str
 
 /**
  * @method getStringFromFile
- * @param {String} arg0
- * @return {String}
- */
-getStringFromFile : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {String}
+*/
+getStringFromFile : function(
+str,
+func 
 )
 {
-    return ;
 },
 
 /**
  * @method removeFile
- * @param {String} arg0
- * @return {bool}
- */
-removeFile : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+removeFile : function(
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7089,18 +7119,29 @@ str
 
 /**
  * @method renameFile
-* @param {String|String} str
-* @param {String|String} str
-* @param {String} str
+* @param {String|String|String|String} str
+* @param {String|String|String|String} str
+* @param {String|String|function} str
+* @param {function} func
 * @return {bool|bool}
 */
 renameFile : function(
 str,
 str,
-str 
+str,
+func 
 )
 {
-    return false;
+},
+
+/**
+ * @method getDefaultResourceRootPath
+ * @return {String}
+ */
+getDefaultResourceRootPath : function (
+)
+{
+    return ;
 },
 
 /**
@@ -7160,6 +7201,16 @@ str
 },
 
 /**
+ * @method getOriginalSearchPaths
+ * @return {Array}
+ */
+getOriginalSearchPaths : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method getNewFilename
  * @param {String} arg0
  * @return {String}
@@ -7169,6 +7220,18 @@ str
 )
 {
     return ;
+},
+
+/**
+ * @method listFiles
+ * @param {String} arg0
+ * @return {Array}
+ */
+listFiles : function (
+str 
+)
+{
+    return new Array();
 },
 
 /**
@@ -7185,14 +7248,15 @@ str
 
 /**
  * @method getFileSize
- * @param {String} arg0
- * @return {long}
- */
-getFileSize : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {long}
+*/
+getFileSize : function(
+str,
+func 
 )
 {
-    return 0;
 },
 
 /**
@@ -7211,14 +7275,15 @@ int
 
 /**
  * @method removeDirectory
- * @param {String} arg0
- * @return {bool}
- */
-removeDirectory : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+removeDirectory : function(
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7233,16 +7298,17 @@ array
 
 /**
  * @method writeStringToFile
- * @param {String} arg0
- * @param {String} arg1
- * @return {bool}
- */
-writeStringToFile : function (
-str, 
-str 
+* @param {String|String} str
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+writeStringToFile : function(
+str,
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7281,28 +7347,30 @@ bool
 
 /**
  * @method writeValueVectorToFile
- * @param {Array} arg0
- * @param {String} arg1
- * @return {bool}
- */
-writeValueVectorToFile : function (
-array, 
-str 
+* @param {Array|Array} array
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+writeValueVectorToFile : function(
+array,
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
  * @method isFileExist
- * @param {String} arg0
- * @return {bool}
- */
-isFileExist : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+isFileExist : function(
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7341,16 +7409,17 @@ str
 
 /**
  * @method writeValueMapToFile
- * @param {map_object} arg0
- * @param {String} arg1
- * @return {bool}
- */
-writeValueMapToFile : function (
-map, 
-str 
+* @param {map_object|map_object} map
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+writeValueMapToFile : function(
+map,
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7387,14 +7456,15 @@ bool
 
 /**
  * @method isDirectoryExist
- * @param {String} arg0
- * @return {bool}
- */
-isDirectoryExist : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+isDirectoryExist : function(
+str,
+func 
 )
 {
-    return false;
 },
 
 /**
@@ -7419,14 +7489,27 @@ getSearchResolutionsOrder : function (
 
 /**
  * @method createDirectory
- * @param {String} arg0
- * @return {bool}
- */
-createDirectory : function (
-str 
+* @param {String|String} str
+* @param {function} func
+* @return {bool}
+*/
+createDirectory : function(
+str,
+func 
 )
 {
-    return false;
+},
+
+/**
+ * @method listFilesRecursively
+ * @param {String} arg0
+ * @param {Array} arg1
+ */
+listFilesRecursively : function (
+str, 
+array 
+)
+{
 },
 
 /**
@@ -7835,7 +7918,7 @@ cc.EventMouse = {
 
 /**
  * @method getMouseButton
- * @return {int}
+ * @return {cc.EventMouse::MouseButton}
  */
 getMouseButton : function (
 )
@@ -7855,10 +7938,10 @@ getLocation : function (
 
 /**
  * @method setMouseButton
- * @param {int} arg0
+ * @param {cc.EventMouse::MouseButton} arg0
  */
 setMouseButton : function (
-int 
+mousebutton 
 )
 {
 },
@@ -10670,13 +10753,13 @@ node
 },
 
 /**
- * @method update
- * @param {float} arg0
+ * @method getNumberOfRunningActions
+ * @return {int}
  */
-update : function (
-float 
+getNumberOfRunningActions : function (
 )
 {
+    return 0;
 },
 
 /**
@@ -10739,6 +10822,16 @@ pauseAllRunningActions : function (
 )
 {
     return new Array();
+},
+
+/**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
 },
 
 /**
@@ -12491,7 +12584,7 @@ isWrapEnabled : function (
 
 /**
  * @method getOutlineSize
- * @return {int}
+ * @return {float}
  */
 getOutlineSize : function (
 )
@@ -16192,6 +16285,16 @@ int
 },
 
 /**
+ * @method getAllParticleSystems
+ * @return {Array}
+ */
+getAllParticleSystems : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method ParticleSystem
  * @constructor
  */
@@ -17350,6 +17453,16 @@ rect
 },
 
 /**
+ * @method isStretchEnabled
+ * @return {bool}
+ */
+isStretchEnabled : function (
+)
+{
+    return false;
+},
+
+/**
  * @method setTextureRect
 * @param {rect_object|rect_object} rect
 * @param {bool} bool
@@ -17373,6 +17486,16 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method setStretchEnabled
+ * @param {bool} arg0
+ */
+setStretchEnabled : function (
+bool 
+)
+{
 },
 
 /**
@@ -17524,16 +17647,6 @@ isTextureRectRotated : function (
 },
 
 /**
- * @method setStrechEnabled
- * @param {bool} arg0
- */
-setStrechEnabled : function (
-bool 
-)
-{
-},
-
-/**
  * @method getTextureRect
  * @return {rect_object}
  */
@@ -17541,16 +17654,6 @@ getTextureRect : function (
 )
 {
     return cc.Rect;
-},
-
-/**
- * @method isStrechEnabled
- * @return {bool}
- */
-isStrechEnabled : function (
-)
-{
-    return false;
 },
 
 /**
@@ -21570,12 +21673,14 @@ removeAllTextures : function (
 
 /**
  * @method addImageAsync
- * @param {String} arg0
- * @param {function} arg1
- */
-addImageAsync : function (
-str, 
-func 
+* @param {String|String} str
+* @param {function|function} func
+* @param {String} str
+*/
+addImageAsync : function(
+str,
+func,
+str 
 )
 {
 },
@@ -21694,6 +21799,16 @@ setETC1AlphaFileSuffix : function (
 str 
 )
 {
+},
+
+/**
+ * @method getETC1AlphaFileSuffix
+ * @return {String}
+ */
+getETC1AlphaFileSuffix : function (
+)
+{
+    return ;
 },
 
 /**

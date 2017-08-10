@@ -580,7 +580,7 @@
 -- Since v2.0, each rendering node must set its shader program.<br>
 -- It should be set in initialize phase.<br>
 -- code<br>
--- node->setGLrProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));<br>
+-- node->setGLProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));<br>
 -- endcode<br>
 -- param glprogram The shader program.
 -- @function [parent=#Node] setGLProgram 
@@ -1219,6 +1219,12 @@
 -- @function [parent=#Node] create 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- Gets count of nodes those are attached to scene graph.
+-- @function [parent=#Node] getAttachedNodeCount 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 

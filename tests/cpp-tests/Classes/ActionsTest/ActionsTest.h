@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -594,6 +594,30 @@ public:
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
+};
+
+class Issue14936_1 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(Issue14936_1);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+    virtual std::string title() const override;
+private:
+    int _count;
+};
+
+class Issue14936_2 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(Issue14936_2);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+    virtual std::string title() const override;
+private:
+    int _count;
 };
 
 #endif
