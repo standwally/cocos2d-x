@@ -73,6 +73,7 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/android/CCGLViewImpl-android.cpp
   platform/android/CCFileUtils-android.cpp
   platform/android/CCEnhanceAPI-android.cpp
+  platform/android/CCNetworkConnectivity-android.cpp
   platform/android/jni/JniHelper.cpp
 )
 
