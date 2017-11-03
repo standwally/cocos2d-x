@@ -4088,6 +4088,7 @@
 		A0E749F81BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */; };
 		A0E749F91BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
 		A0E749FA1BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
+		AA019C7E1FAB3AB8000BD299 /* tinydir.h in Headers */ = {isa = PBXBuildFile; fileRef = AA019C7D1FAB3AB7000BD299 /* tinydir.h */; };
 		AAA227001EA876A700CC6F4B /* CCNetworkConnectivity-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = AAA226FF1EA876A700CC6F4B /* CCNetworkConnectivity-ios.mm */; };
 		AAA227031EA87E6600CC6F4B /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = AAA227011EA87E6600CC6F4B /* Reachability.h */; };
 		AAA227041EA87E6600CC6F4B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA227021EA87E6600CC6F4B /* Reachability.m */; };
@@ -6934,6 +6935,9 @@
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-common.cpp"; sourceTree = "<group>"; };
 		A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-common.h"; sourceTree = "<group>"; };
+		AA019C7B1FAB3AB7000BD299 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		AA019C7C1FAB3AB7000BD299 /* package.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
+		AA019C7D1FAB3AB7000BD299 /* tinydir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinydir.h; sourceTree = "<group>"; };
 		AAA226FE1EA8742800CC6F4B /* CCNetworkConnectivity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCNetworkConnectivity.h; sourceTree = "<group>"; };
 		AAA226FF1EA876A700CC6F4B /* CCNetworkConnectivity-ios.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = "CCNetworkConnectivity-ios.mm"; sourceTree = "<group>"; };
 		AAA227011EA87E6600CC6F4B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -8415,6 +8419,7 @@
 		1A57033E180BD0490088DEC7 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				AA019C7A1FAB3AB7000BD299 /* tinydir */,
 				68B39B391B1C5C670084F72C /* clipper */,
 				B6DD2F731B04820C00E47F5F /* recast */,
 				B6CAB0021AF9A9EE00B9B856 /* bullet */,
@@ -10263,6 +10268,17 @@
 			path = GameNode3DReader;
 			sourceTree = "<group>";
 		};
+		AA019C7A1FAB3AB7000BD299 /* tinydir */ = {
+			isa = PBXGroup;
+			children = (
+				AA019C7B1FAB3AB7000BD299 /* COPYING */,
+				AA019C7C1FAB3AB7000BD299 /* package.json */,
+				AA019C7D1FAB3AB7000BD299 /* tinydir.h */,
+			);
+			name = tinydir;
+			path = ../external/tinydir;
+			sourceTree = "<group>";
+		};
 		B29594B81926D61F003EEF37 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
@@ -11750,6 +11766,7 @@
 				A045F6DE1BA816A1005076C7 /* CCCameraBackgroundBrush.h in Headers */,
 				50ABBED91925AB6F00A911A9 /* ZipUtils.h in Headers */,
 				50643BDB19BFAF4400EF68ED /* CCStdC.h in Headers */,
+				AA019C7E1FAB3AB8000BD299 /* tinydir.h in Headers */,
 				1A5701C3180BCB5A0088DEC7 /* CCLabelBMFont.h in Headers */,
 				B6CAB33F1AF9AA1A00B9B856 /* gim_basic_geometry_operations.h in Headers */,
 				B6CAAFFC1AF9A9E100B9B856 /* CCPhysics3DWorld.h in Headers */,
