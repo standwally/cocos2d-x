@@ -55,6 +55,7 @@ using namespace cocos2d::experimental::ui;
 
 -(void) videoFinished:(NSNotification*) notification;
 -(void) playStateChange;
+- (void)loadStateChange;
 
 
 @end
@@ -166,6 +167,8 @@ using namespace cocos2d::experimental::ui;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playStateChange) name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.moviePlayer];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadStateChange) name:MPMoviePlayerLoadStateDidChangeNotification object:self.moviePlayer];
 }
 
 -(void) videoFinished:(NSNotification *)notification
@@ -198,6 +201,22 @@ using namespace cocos2d::experimental::ui;
             break;
         case MPMoviePlaybackStateSeekingForward:
             break;
+        default:
+            break;
+    }
+}
+
+- (void)loadStateChange
+{
+    MPMovieLoadState state = [self.moviePlayer loadState];
+    
+    switch (state) {
+        case MPMovieLoadStatePlayable:
+        {
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::PLAYABLE);
+        }
+            break;
+            
         default:
             break;
     }

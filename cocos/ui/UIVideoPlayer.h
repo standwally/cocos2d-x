@@ -57,7 +57,8 @@ namespace experimental{
                 PLAYING = 0,
                 PAUSED,
                 STOPPED,
-                COMPLETED
+                COMPLETED,
+                PLAYABLE
             };
 
             /**
