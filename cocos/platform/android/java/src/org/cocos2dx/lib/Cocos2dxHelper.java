@@ -81,6 +81,7 @@ public class Cocos2dxHelper {
     private static Cocos2dxSound sCocos2dSound;
     private static AssetManager sAssetManager;
     private static Cocos2dxAccelerometer sCocos2dxAccelerometer;
+    private static Cocos2dxNetworkConnectivity sCocos2dxNetworkConnectivity;
     private static boolean sAccelerometerEnabled;
     private static boolean sCompassEnabled;
     private static boolean sActivityVisible;
@@ -157,6 +158,7 @@ public class Cocos2dxHelper {
             Cocos2dxHelper.nativeSetApkPath(Cocos2dxHelper.getAssetsPath());
     
             Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(activity);
+            Cocos2dxHelper.sCocos2dxNetworkConnectivity = new Cocos2dxNetworkConnectivity(activity);
             Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(activity);
             Cocos2dxHelper.sCocos2dSound = new Cocos2dxSound(activity);
             Cocos2dxHelper.sAssetManager = activity.getAssets();
@@ -325,6 +327,15 @@ public class Cocos2dxHelper {
  			return "";
  		}
  	}
+
+    public static String getBuildNumber() {
+        try {
+            int buildNumber = Cocos2dxActivity.getContext().getPackageManager().getPackageInfo(Cocos2dxActivity.getContext().getPackageName(), 0).versionCode;
+            return String.valueOf(buildNumber);
+        } catch(Exception e) {
+            return "";
+        }
+    }
 
     public static boolean openURL(String url) { 
         boolean ret = false;
@@ -523,6 +534,10 @@ public class Cocos2dxHelper {
             }
         }
         return -1;
+    }
+
+    public static boolean isConnected() {
+        return sCocos2dxNetworkConnectivity.isConnected();
     }
     
     // ===========================================================

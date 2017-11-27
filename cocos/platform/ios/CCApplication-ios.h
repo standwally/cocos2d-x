@@ -93,6 +93,11 @@ public:
     virtual std::string getVersion() override;
     
     /**
+     @brief Get application build number.
+     */
+    virtual std::string getBuildNumber() override;
+    
+    /**
      @brief Open url in default browser
      @param String with url to open.
      @return true if the resource located by the URL was successfully opened; otherwise false.

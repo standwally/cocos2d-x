@@ -425,7 +425,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
             mCurrentState = STATE_PLAYBACK_COMPLETED;
             mTargetState = STATE_PLAYBACK_COMPLETED;
             
-            release(true);
+//            release(true);
             if (mOnVideoEventListener != null) {
                 mOnVideoEventListener.onVideoEvent(mViewTag,EVENT_COMPLETED);
             }
@@ -573,7 +573,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     /*
      * release the media player in any state
      */
-    private void release(boolean cleartargetstate) {
+    public void release(boolean cleartargetstate) {
         if (mMediaPlayer != null) {
             mMediaPlayer.reset();
             mMediaPlayer.release();

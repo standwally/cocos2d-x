@@ -55,6 +55,7 @@ using namespace cocos2d::experimental::ui;
 
 -(void) videoFinished:(NSNotification*) notification;
 -(void) playStateChange;
+- (void)loadStateChange;
 
 
 @end
@@ -142,7 +143,7 @@ using namespace cocos2d::experimental::ui;
         self.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
     }
     self.moviePlayer.allowsAirPlay = false;
-    self.moviePlayer.controlStyle = MPMovieControlStyleEmbedded;
+    self.moviePlayer.controlStyle = MPMovieControlStyleNone;
     self.moviePlayer.view.userInteractionEnabled = true;
 
     auto clearColor = [UIColor clearColor];
@@ -160,10 +161,12 @@ using namespace cocos2d::experimental::ui;
 
     auto view = cocos2d::Director::getInstance()->getOpenGLView();
     auto eaglview = (CCEAGLView *) view->getEAGLView();
-    [eaglview addSubview:self.moviePlayer.view];
+    [[eaglview superview] insertSubview:self.moviePlayer.view atIndex:0];
+    glClearColor(0, 0, 0, 0);
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playStateChange) name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.moviePlayer];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadStateChange) name:MPMoviePlayerLoadStateDidChangeNotification object:self.moviePlayer];
 }
 
 -(void) videoFinished:(NSNotification *)notification
@@ -196,6 +199,22 @@ using namespace cocos2d::experimental::ui;
             break;
         case MPMoviePlaybackStateSeekingForward:
             break;
+        default:
+            break;
+    }
+}
+
+- (void)loadStateChange
+{
+    MPMovieLoadState state = [self.moviePlayer loadState];
+    
+    switch (state) {
+        case MPMovieLoadStatePlayable:
+        {
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::PLAYABLE);
+        }
+            break;
+        
         default:
             break;
     }
@@ -257,6 +276,16 @@ using namespace cocos2d::experimental::ui;
     if (self.moviePlayer != NULL) {
         [self.moviePlayer stop];
     }
+}
+
+-(double) getDuration
+{
+    return self.moviePlayer.duration;
+}
+
+-(double) getCurrentPlaybackTime
+{
+    return self.moviePlayer.currentPlaybackTime;
 }
 
 @end
@@ -434,6 +463,34 @@ void VideoPlayer::onExit()
 void VideoPlayer::addEventListener(const VideoPlayer::ccVideoPlayerCallback& callback)
 {
     _eventCallback = callback;
+}
+
+double VideoPlayer::getDuration() const
+{
+    double duration = -1;
+    
+    if (!_videoURL.empty())
+    {
+        duration = floor([((UIVideoViewWrapperIos *)_videoView) getDuration] * 1000.0f);
+    }
+    
+    return duration;
+}
+
+double VideoPlayer::getCurrentPlaybackTime() const
+{
+    double currentPlaybackTime = -1;
+    
+    if (!_videoURL.empty())
+    {
+        currentPlaybackTime = floor([((UIVideoViewWrapperIos *)_videoView) getCurrentPlaybackTime] * 1000.0f);
+    }
+    
+    return currentPlaybackTime;
+}
+
+void VideoPlayer::releaseVideo()
+{
 }
 
 void VideoPlayer::onPlayEvent(int event)

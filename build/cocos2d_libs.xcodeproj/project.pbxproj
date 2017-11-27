@@ -3813,6 +3813,10 @@
 		A0E749F81BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */; };
 		A0E749F91BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
 		A0E749FA1BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
+		AA00737F1FCBCCDC00903472 /* CCNetworkConnectivity.h in Headers */ = {isa = PBXBuildFile; fileRef = AA00737E1FCBCCDB00903472 /* CCNetworkConnectivity.h */; };
+		AA0073831FCBCCE600903472 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0073801FCBCCE500903472 /* Reachability.m */; };
+		AA0073841FCBCCE600903472 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = AA0073811FCBCCE500903472 /* Reachability.h */; };
+		AA0073851FCBCCE600903472 /* CCNetworkConnectivity-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = AA0073821FCBCCE600903472 /* CCNetworkConnectivity-ios.mm */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
 		B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703F1977ECE6009EE11B /* OpenGL.framework */; };
@@ -5909,6 +5913,10 @@
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-common.cpp"; sourceTree = "<group>"; };
 		A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-common.h"; sourceTree = "<group>"; };
+		AA00737E1FCBCCDB00903472 /* CCNetworkConnectivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNetworkConnectivity.h; sourceTree = "<group>"; };
+		AA0073801FCBCCE500903472 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		AA0073811FCBCCE500903472 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		AA0073821FCBCCE600903472 /* CCNetworkConnectivity-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "CCNetworkConnectivity-ios.mm"; sourceTree = "<group>"; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B217703D1977ECC1009EE11B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -8512,6 +8520,9 @@
 		503DD8CD1926736A00CD74DD /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				AA0073821FCBCCE600903472 /* CCNetworkConnectivity-ios.mm */,
+				AA0073811FCBCCE500903472 /* Reachability.h */,
+				AA0073801FCBCCE500903472 /* Reachability.m */,
 				503DD8CE1926736A00CD74DD /* CCApplication-ios.h */,
 				503DD8CF1926736A00CD74DD /* CCApplication-ios.mm */,
 				503DD8D01926736A00CD74DD /* CCCommon-ios.mm */,
@@ -8627,6 +8638,7 @@
 		50ABBEDB1926664700A911A9 /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				AA00737E1FCBCCDB00903472 /* CCNetworkConnectivity.h */,
 				503DD8CD1926736A00CD74DD /* ios */,
 				50ABBF2D1926664700A911A9 /* desktop */,
 				50ABBF4E1926664700A911A9 /* mac */,
@@ -9534,6 +9546,7 @@
 				B63990CE1A490AFE00B07923 /* CCAsyncTaskPool.h in Headers */,
 				B6CAAFF81AF9A9E100B9B856 /* CCPhysics3DShape.h in Headers */,
 				B665E2201AA80A6500DDB1C5 /* CCPUBehaviourManager.h in Headers */,
+				AA00737F1FCBCCDC00903472 /* CCNetworkConnectivity.h in Headers */,
 				15AE180A19AAD2F700C27E9E /* CCAABB.h in Headers */,
 				50864CDF1C7BC1B100B3BAB1 /* cpTransform.h in Headers */,
 				B665E28C1AA80A6500DDB1C5 /* CCPUDynamicAttribute.h in Headers */,
@@ -9597,6 +9610,7 @@
 				1A40D1421E8E56C7002E363A /* strfunc.h in Headers */,
 				B276EF631988D1D500CD400F /* CCVertexIndexBuffer.h in Headers */,
 				5020A20D1D49912500E80C72 /* Slot.h in Headers */,
+				AA0073841FCBCCE600903472 /* Reachability.h in Headers */,
 				50ABBE871925AB6F00A911A9 /* ccMacros.h in Headers */,
 				B665E32C1AA80A6500DDB1C5 /* CCPUOnCountObserver.h in Headers */,
 				3E2A09C41BAA91B70086B878 /* CCMotionStreak3D.h in Headers */,
@@ -12193,6 +12207,7 @@
 				B665E24E1AA80A6500DDB1C5 /* CCPUColorAffectorTranslator.cpp in Sources */,
 				5020A2101D49912500E80C72 /* SlotData.c in Sources */,
 				15AE1B9B19AADFDF00C27E9E /* UIRelativeBox.cpp in Sources */,
+				AA0073831FCBCCE600903472 /* Reachability.m in Sources */,
 				B665E3E21AA80A6600DDB1C5 /* CCPUSineForceAffector.cpp in Sources */,
 				50ABBD501925AB0000A911A9 /* Quaternion.cpp in Sources */,
 				B665E36E1AA80A6500DDB1C5 /* CCPUOnVelocityObserverTranslator.cpp in Sources */,
@@ -12717,6 +12732,7 @@
 				15AE190B19AAD35000C27E9E /* CCDisplayFactory.cpp in Sources */,
 				1A9DCA27180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */,
 				B665E2661AA80A6500DDB1C5 /* CCPUDoExpireEventHandlerTranslator.cpp in Sources */,
+				AA0073851FCBCCE600903472 /* CCNetworkConnectivity-ios.mm in Sources */,
 				50ABBD541925AB0000A911A9 /* TransformUtils.cpp in Sources */,
 				DABC9FA919E7DFA900FA252C /* CCClippingRectangleNode.cpp in Sources */,
 				3E2F27A619CFBFE100E7C490 /* AudioEngine.cpp in Sources */,
@@ -14569,6 +14585,160 @@
 			};
 			name = Release;
 		};
+		AA0073861FCBCD5E00903472 /* InHouseQA */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					NDEBUG,
+					USE_FILE32API,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../external/chipmunk/include $(SRCROOT)/../external $(SRCROOT)/../extensions $(SRCROOT)/../external/poly2tri $(SRCROOT)/../external/poly2tri/common $(SRCROOT)/../external/poly2tri/sweep $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = InHouseQA;
+		};
+		AA0073871FCBCD5E00903472 /* InHouseQA */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_EXTENSION = a;
+				EXECUTABLE_PREFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../cocos/platform/mac/cocos2d-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_KEYBOARD_SUPPORT,
+					CC_TARGET_OS_MAC,
+					_USRDLL,
+				);
+				HEADER_SEARCH_PATHS = "";
+				LD_DYLIB_INSTALL_NAME = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../external/glfw3/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/png/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/jpeg/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/tiff/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/webp/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/chipmunk/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/curl/prebuilt/mac\"",
+					"\"$(SRCROOT)/../external/zlib/prebuilt/mac\"",
+					"$(SRCROOT)/../external/openssl/prebuilt/mac",
+					"$(SRCROOT)/../external/bullet/prebuilt/mac",
+				);
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "-llibsql3";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/curl/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2 $(SRCROOT)/../external/openssl/include/mac $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet";
+			};
+			name = InHouseQA;
+		};
+		AA0073881FCBCD5E00903472 /* InHouseQA */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ENABLE_BITCODE = NO;
+				EXECUTABLE_PREFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../cocos/platform/ios/cocos2d-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_IPHONE,
+				);
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../external/png/prebuilt/ios\"",
+					"\"$(SRCROOT)/../external/jpeg/prebuilt/ios\"",
+					"\"$(SRCROOT)/../external/tiff/prebuilt/ios\"",
+					"\"$(SRCROOT)/../external/webp/prebuilt/ios\"",
+					"\"$(SRCROOT)/../external/freetype2/prebuilt/ios\"",
+					"\"$(SRCROOT)/../external/curl/prebuilt/ios\"",
+					"\"$(SRCROOT)/../external/websockets/prebuilt/ios\"",
+					"\"$(SRCROOT)/../external/chipmunk/prebuilt/ios\"",
+					"\"$(SRCROOT)/../external/openssl/prebuilt/ios\"",
+					"\"$(SRCROOT)/../external/bullet/prebuilt/ios\"",
+				);
+				OTHER_LDFLAGS = "-llibsql3";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/openssl/include/ios $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/bullet/include";
+				VALID_ARCHS = "arm64 armv7";
+			};
+			name = InHouseQA;
+		};
+		AA0073891FCBCD5E00903472 /* InHouseQA */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "../cocos/platform/ios/cocos2d-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CC_TARGET_OS_TVOS,
+				);
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../external/png/prebuilt/tvos\"",
+					"\"$(SRCROOT)/../external/jpeg/prebuilt/tvos\"",
+					"\"$(SRCROOT)/../external/tiff/prebuilt/tvos\"",
+					"\"$(SRCROOT)/../external/webp/prebuilt/tvos\"",
+					"\"$(SRCROOT)/../external/freetype2/prebuilt/tvos\"",
+					"\"$(SRCROOT)/../external/curl/prebuilt/tvos\"",
+					"\"$(SRCROOT)/../external/websockets/prebuilt/tvos\"",
+					"\"$(SRCROOT)/../external/chipmunk/prebuilt/tvos\"",
+					"\"$(SRCROOT)/../external/openssl/prebuilt/tvos\"",
+				);
+				OTHER_LDFLAGS = "-llibsql3";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/tvos $(SRCROOT)/../external/curl/include/tvos $(SRCROOT)/../external/webp/include/tvos $(SRCROOT)/../external/tiff/include/tvos $(SRCROOT)/../external/jpeg/include/tvos $(SRCROOT)/../external/png/include/tvos $(SRCROOT)/../external/websockets/include/tvos $(SRCROOT)/../external/freetype2/include/tvos/freetype2 $(SRCROOT)/../external/openssl/include/tvos";
+			};
+			name = InHouseQA;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -14577,6 +14747,7 @@
 			buildConfigurations = (
 				1551A34A158F2AB200E66CFE /* Debug */,
 				1551A34B158F2AB200E66CFE /* Release */,
+				AA0073861FCBCD5E00903472 /* InHouseQA */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -14586,6 +14757,7 @@
 			buildConfigurations = (
 				1551A34D158F2AB200E66CFE /* Debug */,
 				1551A34E158F2AB200E66CFE /* Release */,
+				AA0073871FCBCD5E00903472 /* InHouseQA */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -14595,6 +14767,7 @@
 			buildConfigurations = (
 				507B40FB1C31BDD30067B53E /* Debug */,
 				507B40FC1C31BDD30067B53E /* Release */,
+				AA0073891FCBCD5E00903472 /* InHouseQA */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -14604,6 +14777,7 @@
 			buildConfigurations = (
 				A07A4D621783777C0073F6A7 /* Debug */,
 				A07A4D631783777C0073F6A7 /* Release */,
+				AA0073881FCBCD5E00903472 /* InHouseQA */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
