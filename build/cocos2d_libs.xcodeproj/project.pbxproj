@@ -3817,6 +3817,10 @@
 		AA0073831FCBCCE600903472 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0073801FCBCCE500903472 /* Reachability.m */; };
 		AA0073841FCBCCE600903472 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = AA0073811FCBCCE500903472 /* Reachability.h */; };
 		AA0073851FCBCCE600903472 /* CCNetworkConnectivity-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = AA0073821FCBCCE600903472 /* CCNetworkConnectivity-ios.mm */; };
+		AA0073901FCCFB0000903472 /* CCNetworkConnectivity-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = AA0073821FCBCCE600903472 /* CCNetworkConnectivity-ios.mm */; };
+		AA0073911FCCFB0C00903472 /* CCNetworkConnectivity.h in Headers */ = {isa = PBXBuildFile; fileRef = AA00737E1FCBCCDB00903472 /* CCNetworkConnectivity.h */; };
+		AA0073921FCD062700903472 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = AA0073811FCBCCE500903472 /* Reachability.h */; };
+		AA0073931FCD064400903472 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0073801FCBCCE500903472 /* Reachability.m */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
 		B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703F1977ECE6009EE11B /* OpenGL.framework */; };
@@ -11215,6 +11219,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA0073921FCD062700903472 /* Reachability.h in Headers */,
+				AA0073911FCCFB0C00903472 /* CCNetworkConnectivity.h in Headers */,
 				C5F516201C822D900013B695 /* UITabControl.h in Headers */,
 				C5F5161E1C822D5B0013B695 /* TabControlReader.h in Headers */,
 				503DD8F01926736A00CD74DD /* CCStdC-ios.h in Headers */,
@@ -13569,6 +13575,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA0073931FCD064400903472 /* Reachability.m in Sources */,
+				AA0073901FCCFB0000903472 /* CCNetworkConnectivity-ios.mm in Sources */,
 				C5F5161F1C822D6D0013B695 /* UITabControl.cpp in Sources */,
 				C5F5161D1C822D400013B695 /* TabControlReader.cpp in Sources */,
 				D0FD03541A3B51AA00825BB5 /* CCAllocatorGlobalNewDelete.cpp in Sources */,
