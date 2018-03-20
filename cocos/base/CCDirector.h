@@ -294,6 +294,8 @@ public:
      */
     void pushScene(Scene *scene);
 
+    ssize_t getScenesStackSize();
+
     /** 
      * Pops out a scene from the stack.
      * This scene will replace the running one.
