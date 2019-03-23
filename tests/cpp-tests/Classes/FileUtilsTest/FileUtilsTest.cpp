@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "FileUtilsTest.h"
 
 USING_NS_CC;
@@ -23,6 +47,8 @@ FileUtilsTests::FileUtilsTests()
     ADD_TEST_CASE(TestFileFuncsAsync);
     ADD_TEST_CASE(TestWriteStringAsync);
     ADD_TEST_CASE(TestWriteDataAsync);
+    ADD_TEST_CASE(TestListFiles);
+    ADD_TEST_CASE(TestIsFileExistRejectFolder);
 }
 
 // TestResolutionDirectories
@@ -178,7 +204,7 @@ std::string TestSearchPath::title() const
 
 std::string TestSearchPath::subtitle() const
 {
-    return "See the console, can see a orange box and a 'about' picture";
+    return "See the console, can see a orange box and a 'about' picture, except Android";
 }
 
 // TestFilenameLookup
@@ -1364,6 +1390,83 @@ std::string TestWriteDataAsync::title() const
 }
 
 std::string TestWriteDataAsync::subtitle() const
+{
+    return "";
+}
+
+void TestListFiles::onEnter()
+{
+    FileUtilsDemo::onEnter();
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto infoLabel = Label::createWithTTF("show file count, should not be 0", "fonts/Thonburi.ttf", 18);
+    this->addChild(infoLabel);
+    infoLabel->setPosition(winSize.width / 2, winSize.height * 3 / 4);
+
+    auto cntLabel = Label::createWithTTF("show readResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(cntLabel);
+    cntLabel->setPosition(winSize.width / 2, winSize.height / 3);
+    // writeTest
+    auto list = FileUtils::getInstance()->listFiles("fonts");
+
+    char cntBuffer[200] = { 0 };
+    snprintf(cntBuffer, 200, "%d", list.size());
+    cntLabel->setString(cntBuffer);
+
+}
+
+void TestListFiles::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestListFiles::title() const
+{
+    return "FileUtils: list files of directory";
+}
+
+std::string TestListFiles::subtitle() const
+{
+    return "";
+}
+
+
+
+void TestIsFileExistRejectFolder::onEnter()
+{
+    FileUtilsDemo::onEnter();
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto infoLabel = Label::createWithTTF("tests folder 'NavMesh/maps', expect to be false", "fonts/Thonburi.ttf", 18);
+    this->addChild(infoLabel);
+    infoLabel->setPosition(winSize.width / 2, winSize.height * 3 / 4);
+
+    auto cntLabel = Label::createWithTTF("waiting...", "fonts/Thonburi.ttf", 18);
+    this->addChild(cntLabel);
+    cntLabel->setPosition(winSize.width / 2, winSize.height / 3);
+    
+    auto exists = FileUtils::getInstance()->isFileExist("NavMesh/maps");
+    auto isDirectory = FileUtils::getInstance()->isDirectoryExist("NavMesh/maps");
+
+    char cntBuffer[200] = { 0 };
+    snprintf(cntBuffer, 200, "isDir: %s, isFile: %s,  %s", isDirectory ? "true": "false" , exists ? "true" : "false", exists ? "failure!" : "ok!" );
+    cntLabel->setString(cntBuffer);
+
+}
+
+void TestIsFileExistRejectFolder::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestIsFileExistRejectFolder::title() const
+{
+    return "FileUtils: isFileExist(direname)";
+}
+
+std::string TestIsFileExistRejectFolder::subtitle() const
 {
     return "";
 }
