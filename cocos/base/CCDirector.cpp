@@ -944,6 +944,11 @@ void Director::popToRootScene(void)
     popToSceneStackLevel(1);
 }
 
+ssize_t Director::getScenesStackSize()
+{
+    return _scenesStack.size();
+}
+
 void Director::popToSceneStackLevel(int level)
 {
     CCASSERT(_runningScene != nullptr, "A running Scene is needed");
@@ -1514,6 +1519,9 @@ void Director::setAnimationInterval(float interval, SetIntervalReason reason)
         startAnimation(reason);
     }
 }
+
+
+
 
 NS_CC_END
 

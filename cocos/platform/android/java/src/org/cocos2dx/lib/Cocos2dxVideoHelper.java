@@ -40,7 +40,7 @@ public class Cocos2dxVideoHelper {
 
     private FrameLayout mLayout = null;
     private Cocos2dxActivity mActivity = null;  
-    private SparseArray<Cocos2dxVideoView> sVideoViews = null;
+    private static SparseArray<Cocos2dxVideoView> sVideoViews = null;
     static VideoHandler mVideoHandler = null;
     
     Cocos2dxVideoHelper(Cocos2dxActivity activity,FrameLayout layout)
@@ -66,6 +66,9 @@ public class Cocos2dxVideoHelper {
     private final static int VideoTaskRestart = 10;
     private final static int VideoTaskKeepRatio = 11;
     private final static int VideoTaskFullScreen = 12;
+    private final static int VideoTaskGetDuration = 13;
+    private final static int VideoTaskGetCurrentPosition = 14;
+    private final static int VideoTaskRelease = 15;
     final static int KeyEventBack = 1000;
     
     static class VideoHandler extends Handler{
@@ -157,6 +160,11 @@ public class Cocos2dxVideoHelper {
                 }
                 break;
             }
+            case VideoTaskRelease: {
+                Cocos2dxVideoHelper helper = mReference.get();
+                helper._releaseVideo(msg.arg1);
+                break;
+            }
             case KeyEventBack: {
                 Cocos2dxVideoHelper helper = mReference.get();
                 helper.onBackKeyEvent();
@@ -212,8 +220,8 @@ public class Cocos2dxVideoHelper {
         FrameLayout.LayoutParams lParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT);
-        mLayout.addView(videoView, lParams);
-        videoView.setZOrderOnTop(true);
+        mLayout.addView(videoView, 0, lParams);
+        videoView.setZOrderOnTop(false);
         videoView.setOnCompletionListener(videoEventListener);
     }
     
@@ -431,6 +439,38 @@ public class Cocos2dxVideoHelper {
         Cocos2dxVideoView videoView = sVideoViews.get(index);
         if (videoView != null) {
             videoView.setKeepRatio(enable);
+        }
+    }
+
+    public static int getDuration(int index) {
+        Cocos2dxVideoView videoView = sVideoViews.get(index);
+        if (videoView != null) {
+            return videoView.getDuration();
+        }
+
+        return -1;
+    }
+
+    public static int getCurrentPosition(int index) {
+        Cocos2dxVideoView videoView = sVideoViews.get(index);
+        if (videoView != null) {
+            return videoView.getCurrentPosition();
+        }
+
+        return 0;
+    }
+
+    public static void releaseVideo(int index) {
+        Message msg = new Message();
+        msg.what = VideoTaskRelease;
+        msg.arg1 = index;
+        mVideoHandler.sendMessage(msg);
+    }
+
+    private void _releaseVideo(int index) {
+        Cocos2dxVideoView videoView = sVideoViews.get(index);
+        if (videoView != null) {
+            videoView.release(true);
         }
     }
 }

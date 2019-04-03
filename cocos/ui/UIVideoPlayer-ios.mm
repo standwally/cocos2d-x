@@ -32,13 +32,17 @@ using namespace cocos2d::experimental::ui;
 //-------------------------------------------------------------------------------------
 
 #include "platform/ios/CCEAGLView-ios.h"
-#import <MediaPlayer/MediaPlayer.h>
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
 
+#include <AVKit/AVPlayerViewController.h>
+#include <AVFoundation/AVPlayer.h>
+#include <AVFoundation/AVPlayerItem.h>
+#include <CoreGraphics/CGGeometry.h>
+
 @interface UIVideoViewWrapperIos : NSObject
 
-@property (strong,nonatomic) MPMoviePlayerController * moviePlayer;
+@property (strong, nonatomic) AVPlayerViewController * moviePlayer;
 
 - (void) setFrame:(int) left :(int) top :(int) width :(int) height;
 - (void) setURL:(int) videoSource :(std::string&) videoUrl;
@@ -51,11 +55,16 @@ using namespace cocos2d::experimental::ui;
 - (void) setKeepRatioEnabled:(BOOL) enabled;
 - (void) setFullScreenEnabled:(BOOL) enabled;
 - (BOOL) isFullScreenEnabled;
+- (void) initializeURL:(int)urlType url:(std::string&)url;
+- (void) initializeMoviePlayer;
+- (void) destroyMoviePlayer;
+- (void) destroyURL;
 
 -(id) init:(void*) videoPlayer;
 
 -(void) videoFinished:(NSNotification*) notification;
 -(void) playStateChange;
+- (void)loadStateChange;
 
 
 @end
@@ -66,17 +75,21 @@ using namespace cocos2d::experimental::ui;
     int _top;
     int _width;
     int _height;
-    bool _keepRatioEnabled;
+    CMTime _currentTime;
+    bool _paused;
+    NSURL* _url;
 
     VideoPlayer* _videoPlayer;
 }
 
 -(id)init:(void*)videoPlayer
 {
-    if (self = [super init]) {
+    if (self = [super init])
+    {
         self.moviePlayer = nullptr;
         _videoPlayer = (VideoPlayer*)videoPlayer;
-        _keepRatioEnabled = false;
+        _paused = false;
+        _url = nullptr;
     }
 
     return self;
@@ -84,15 +97,8 @@ using namespace cocos2d::experimental::ui;
 
 -(void) dealloc
 {
-    if (self.moviePlayer != nullptr) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.moviePlayer];
-
-        [self.moviePlayer stop];
-        [self.moviePlayer.view removeFromSuperview];
-        self.moviePlayer = nullptr;
-        _videoPlayer = nullptr;
-    }
+    [self destroyMoviePlayer];
+    [self destroyURL];
     [super dealloc];
 }
 
@@ -102,162 +108,194 @@ using namespace cocos2d::experimental::ui;
     _width = width;
     _top = top;
     _height = height;
-    if (self.moviePlayer != nullptr) {
+    if (self.moviePlayer != nullptr)
+    {
         [self.moviePlayer.view setFrame:CGRectMake(left, top, width, height)];
     }
 }
 
 -(void) setFullScreenEnabled:(BOOL) enabled
 {
-    if (self.moviePlayer != nullptr) {
-        [self.moviePlayer setFullscreen:enabled animated:(true)];
-    }
+    // not supported
 }
 
 -(BOOL) isFullScreenEnabled
 {
-    if (self.moviePlayer != nullptr) {
-        return [self.moviePlayer isFullscreen];
-    }
-
     return false;
 }
 
 -(void) setURL:(int)videoSource :(std::string &)videoUrl
 {
-    if (self.moviePlayer != nullptr) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.moviePlayer];
+    [self destroyMoviePlayer];
 
-        [self.moviePlayer stop];
-        [self.moviePlayer.view removeFromSuperview];
-        self.moviePlayer = nullptr;
-    }
-
-    if (videoSource == 1) {
-        self.moviePlayer = [[[MPMoviePlayerController alloc] init] autorelease];
-        self.moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
-        [self.moviePlayer setContentURL:[NSURL URLWithString:@(videoUrl.c_str())]];
-    } else {
-        self.moviePlayer = [[[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:@(videoUrl.c_str())]] autorelease];
-        self.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
-    }
-    self.moviePlayer.allowsAirPlay = false;
-    self.moviePlayer.controlStyle = MPMovieControlStyleEmbedded;
-    self.moviePlayer.view.userInteractionEnabled = true;
-
-    auto clearColor = [UIColor clearColor];
-    self.moviePlayer.backgroundView.backgroundColor = clearColor;
-    self.moviePlayer.view.backgroundColor = clearColor;
-    for (UIView * subView in self.moviePlayer.view.subviews) {
-        subView.backgroundColor = clearColor;
-    }
-
-    if (_keepRatioEnabled) {
-        self.moviePlayer.scalingMode = MPMovieScalingModeAspectFit;
-    } else {
-        self.moviePlayer.scalingMode = MPMovieScalingModeFill;
-    }
-
-    auto view = cocos2d::Director::getInstance()->getOpenGLView();
-    auto eaglview = (CCEAGLView *) view->getEAGLView();
-    [eaglview addSubview:self.moviePlayer.view];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playStateChange) name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.moviePlayer];
+    // should initialize url first
+    [self initializeURL:videoSource url:videoUrl];
+    [self initializeMoviePlayer];
 }
 
 -(void) videoFinished:(NSNotification *)notification
 {
-    if(_videoPlayer != nullptr)
+    if (_videoPlayer !=  nullptr)
     {
-        if([self.moviePlayer playbackState] != MPMoviePlaybackStateStopped)
-        {
-            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::COMPLETED);
-        }
-    }
-}
-
--(void) playStateChange
-{
-    MPMoviePlaybackState state = [self.moviePlayer playbackState];
-    switch (state) {
-        case MPMoviePlaybackStatePaused:
-            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::PAUSED);
-            break;
-        case MPMoviePlaybackStateStopped:
-            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::STOPPED);
-            break;
-        case MPMoviePlaybackStatePlaying:
-            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::PLAYING);
-            break;
-        case MPMoviePlaybackStateInterrupted:
-            break;
-        case MPMoviePlaybackStateSeekingBackward:
-            break;
-        case MPMoviePlaybackStateSeekingForward:
-            break;
-        default:
-            break;
+        [self destroyMoviePlayer];
+        _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::COMPLETED);
     }
 }
 
 -(void) seekTo:(float)sec
 {
-    if (self.moviePlayer != NULL) {
-        [self.moviePlayer setCurrentPlaybackTime:(sec)];
-    }
+    if (self.moviePlayer != nullptr)
+        [self.moviePlayer.player seekToTime:CMTimeMake(sec * 100, 100)];
 }
 
 -(void) setVisible:(BOOL)visible
 {
-    if (self.moviePlayer != NULL) {
+    if (self.moviePlayer != nullptr) {
         [self.moviePlayer.view setHidden:!visible];
     }
 }
 
 -(void) setKeepRatioEnabled:(BOOL)enabled
 {
-    _keepRatioEnabled = enabled;
-    if (self.moviePlayer != NULL) {
-        if (enabled) {
-            self.moviePlayer.scalingMode = MPMovieScalingModeAspectFit;
-        } else {
-            self.moviePlayer.scalingMode = MPMovieScalingModeFill;
-        }
-    }
+    // not supported
 }
 
 -(void) play
 {
-    if (self.moviePlayer != NULL) {
+    if (self.moviePlayer != nullptr)
+    {
         [self.moviePlayer.view setFrame:CGRectMake(_left, _top, _width, _height)];
-        [self.moviePlayer play];
+        [self.moviePlayer.player play];
+        _paused = false;
+        _currentTime = CMTimeMake(0, 100);
+        
+        if (self.moviePlayer.player.status == AVPlayerStatusReadyToPlay)
+        {
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::PLAYING);
+        }
     }
 }
 
 -(void) pause
 {
-    if (self.moviePlayer != NULL) {
-        [self.moviePlayer pause];
+    if (self.moviePlayer != nullptr)
+    {
+        _currentTime = [self.moviePlayer.player currentTime];
+        _paused = true;
+        [self.moviePlayer.player pause];
+        
+        _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::PAUSED);
     }
 }
 
 -(void) resume
 {
-    if (self.moviePlayer != NULL) {
-        if([self.moviePlayer playbackState] == MPMoviePlaybackStatePaused)
-        {
-            [self.moviePlayer play];
-        }
+    if (self.moviePlayer != nullptr && _paused)
+    {
+        [self seekTo: CMTimeGetSeconds(_currentTime)];
+        [self play];
+        _paused = false;
     }
 }
 
 -(void) stop
 {
-    if (self.moviePlayer != NULL) {
-        [self.moviePlayer stop];
+    if (self.moviePlayer != nullptr)
+    {
+        // AVPlayer doesn't have a `stop` method, so invoke `destroyMoviePlayer` to have the same effect.
+        [self destroyMoviePlayer];
+        _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::STOPPED);
+        _paused = false;
     }
+}
+
+-(void) initializeMoviePlayer
+{
+    [self destroyMoviePlayer];
+    
+    self.moviePlayer = [[AVPlayerViewController alloc] init];
+    self.moviePlayer.view.userInteractionEnabled = true;
+    self.moviePlayer.player = [AVPlayer playerWithURL:_url];
+    self.moviePlayer.showsPlaybackControls = false;
+    
+    auto clearColor = [UIColor clearColor];
+    self.moviePlayer.view.backgroundColor = clearColor;
+    for (UIView * subView in self.moviePlayer.view.subviews)
+        subView.backgroundColor = clearColor;
+    
+    auto view = cocos2d::Director::getInstance()->getOpenGLView();
+    auto eaglview = (CCEAGLView *) view->getEAGLView();
+    [[eaglview superview] insertSubview:self.moviePlayer.view atIndex:0];
+//    glClearColor(0, 0, 0, 0);
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:[self.moviePlayer.player currentItem]];
+    [self.moviePlayer.player addObserver:self forKeyPath:@"status" options:0 context:nil];
+}
+
+-(void) initializeURL:(int)urlType url:(std::string&)url
+{
+    [self destroyURL];
+    
+    if (urlType == 0)
+        _url = [[NSURL alloc] initFileURLWithPath:@(url.c_str())];
+    else
+        _url = [[NSURL alloc] initWithString:@(url.c_str())];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if (object == self.moviePlayer.player && [keyPath isEqualToString:@"status"])
+    {
+        if (self.moviePlayer.player.status == AVPlayerStatusReadyToPlay)
+        {
+            _videoPlayer->onPlayEvent((int)VideoPlayer::EventType::PLAYING);
+        }
+    }
+}
+
+-(void) destroyMoviePlayer
+{
+    if (self.moviePlayer != nullptr)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:[self.moviePlayer.player currentItem]];
+        [self.moviePlayer.player removeObserver:self forKeyPath:@"status"];
+        
+        // It is more reasonable to invoke `stop` here, but because `stop` will invoke `destroyMoviePlayer` to real stop the video
+        // so inoke `pause` here.
+        _currentTime = [self.moviePlayer.player currentTime];
+        _paused = true;
+        [self.moviePlayer.player pause];
+        [self.moviePlayer.view removeFromSuperview];
+        self.moviePlayer = nullptr;
+    }
+}
+
+-(void) destroyURL
+{
+    if (_url)
+        [_url dealloc];
+    
+    _url = nullptr;
+}
+
+-(double) getDuration
+{
+    if (self.moviePlayer != nullptr)
+    {
+        return CMTimeGetSeconds(self.moviePlayer.player.currentItem.asset.duration);
+    }
+    
+    return 0.0f;
+}
+
+-(double) getCurrentPlaybackTime
+{
+    if (self.moviePlayer != nullptr)
+    {
+        return CMTimeGetSeconds(self.moviePlayer.player.currentItem.currentTime);
+    }
+    
+    return 0.0f;
 }
 
 @end
@@ -435,6 +473,34 @@ void VideoPlayer::onExit()
 void VideoPlayer::addEventListener(const VideoPlayer::ccVideoPlayerCallback& callback)
 {
     _eventCallback = callback;
+}
+
+double VideoPlayer::getDuration() const
+{
+    double duration = -1;
+    
+    if (!_videoURL.empty())
+    {
+        duration = floor([((UIVideoViewWrapperIos *)_videoView) getDuration] * 1000.0f);
+    }
+    
+    return duration;
+}
+
+double VideoPlayer::getCurrentPlaybackTime() const
+{
+    double currentPlaybackTime = -1;
+    
+    if (!_videoURL.empty())
+    {
+        currentPlaybackTime = floor([((UIVideoViewWrapperIos *)_videoView) getCurrentPlaybackTime] * 1000.0f);
+    }
+    
+    return currentPlaybackTime;
+}
+
+void VideoPlayer::releaseVideo()
+{
 }
 
 void VideoPlayer::onPlayEvent(int event)

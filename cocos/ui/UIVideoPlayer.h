@@ -165,6 +165,21 @@ namespace experimental{
             virtual void addEventListener(const VideoPlayer::ccVideoPlayerCallback& callback);
             
             /**
+             * Gets the duration of video
+             */
+            virtual double getDuration() const;
+            
+            /**
+             * Gets the current playback time of video
+             */
+            virtual double getCurrentPlaybackTime() const;
+            
+            /**
+             * Release for Android native MediaPlayer
+             */
+            virtual void releaseVideo();
+            
+            /**
              * @brief A function which will be called when video is playing.
              *
              * @param event @see VideoPlayer::EventType.

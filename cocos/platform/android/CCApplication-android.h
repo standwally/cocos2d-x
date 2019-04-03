@@ -90,6 +90,11 @@ public:
      @brief Get application version.
      */
     virtual std::string getVersion() override;
+    
+    /**
+     @brief Get build number.
+     */
+    virtual std::string getBuildNumber() override;
 
     /**
      @brief Open url in default browser

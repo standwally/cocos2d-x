@@ -30,6 +30,7 @@ if(ANDROID)
         platform/android/CCGLViewImpl-android.cpp
         platform/android/CCFileUtils-android.cpp
         platform/android/CCEnhanceAPI-android.cpp
+        platform/android/CCNetworkConnectivity-android.cpp
     )
 elseif(WINDOWS)
     set(COCOS_PLATFORM_SPECIFIC_HEADER
