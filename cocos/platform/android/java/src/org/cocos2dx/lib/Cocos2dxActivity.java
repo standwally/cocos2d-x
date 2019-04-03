@@ -296,6 +296,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         //if (isAndroidEmulator())
         //   this.mGLSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
 
+        this.mGLSurfaceView.setZOrderMediaOverlay(true);
+
         this.mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
         this.mGLSurfaceView.setCocos2dxEditText(edittext);
 
